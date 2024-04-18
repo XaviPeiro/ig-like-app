@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app-server-gunicorn
+  labels:
+    app: dummy-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dummy-api # References pods
+  template:
+    metadata:
+      name: dummy-api
+      labels:
+        app: dummy-api
+    spec:
+      containers:
+        - name: dummy-api
+          image: xpeiro92/dummy-server-gunicorn:latest
+          args: ["--workers=4", "--log-level=debug", "-b", "0.0.0.0:9000"]
+          ports:
+            - containerPort: 9000 # just informative, like in dockerfile
+          # if using latest image tag, it should be always pulled by default.
+#          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-gunicorn-server
+spec:
+  selector:
+    app: dummy-api # References deployment
+  ports:
+    - port: 1234
+      targetPort: 9000
+      protocol: TCP
+      appProtocol: HTTP
+  type: LoadBalancer

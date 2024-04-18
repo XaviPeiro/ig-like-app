@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "instagram-like"
+version = "0.1.0"
+description = ""
+authors = ["xavi <xpeiro92@gmail.com>"]
+readme = "README.md"
+packages = [{include = "instagram_like"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

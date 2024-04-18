@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client_abuser
+  labels:
+    role: client_abuser
+spec:
+  containers:
+    - name: client_abuser
+      image: nginx # requestor image
+      imagePullPolicy: IfNotPresent
+      ports:
+        - name: client_abuser
+          containerPort: 80
+          protocol: TCP
+  restartPolicy: Always
+  
