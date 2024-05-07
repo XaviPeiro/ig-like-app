@@ -1,0 +1,36 @@
+version: "3"
+
+volumes:
+  postgres:
+
+services:
+  ig-like:
+    build:
+      context: .
+      dockerfile: docker/ig_app_services.Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_SERVICE_PORT: 5432
+      POSTGRES_SERVICE_HOST: postgres
+      POSTGRES_DB: ig-like
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: SecurePassword
+    entrypoint: /docker/entrypoint.sh
+    volumes:
+      - ./instagram_like:/app/src
+    ports:
+      - "8081:8002"
+
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: SecurePassword
+      POSTGRES_DB: ig-like
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+

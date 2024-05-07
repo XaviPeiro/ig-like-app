@@ -1,4 +1,5 @@
 import argparse
+import asyncio
 from datetime import time
 
 if __name__ == "__main__":
@@ -12,9 +13,9 @@ if __name__ == "__main__":
     starting_time = time.time()
     print(f"Starting...:")
 
-    if args.type == ""
+    # if args.type == ""
     number_requests = 1000
-    asyncio.run(main(url=args.__dict__.get("server"), number_requests=number_requests))
+    # asyncio.run(main(url=args.__dict__.get("server"), number_requests=number_requests))
 
     ending_time = time.time()
     print(f"🤖 {number_requests} requests executed!")

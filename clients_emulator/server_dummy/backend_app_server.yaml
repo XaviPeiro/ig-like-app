@@ -18,7 +18,7 @@ spec:
       containers:
         - name: dummy-api
           image: xpeiro92/dummy-server-gunicorn:latest
-          args: ["--workers=4", "--log-level=debug", "-b", "0.0.0.0:9000"]
+          args: ["--workers=2", "--log-level=debug", "-b", "0.0.0.0:9000"]
           ports:
             - containerPort: 9000 # just informative, like in dockerfile
           # if using latest image tag, it should be always pulled by default.

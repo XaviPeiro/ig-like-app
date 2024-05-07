@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-services
+  labels:
+    app: app-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-services
+  template:
+    metadata:
+      name: app-services
+      labels:
+        app: app-services
+    spec:
+      containers:
+        - name: app-services
+          image: xpeiro92/ig-backend-services-fastapi
+#          env:
+#            - name: SQL_API_ADDRESS
+#              value: postgres.default
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8002
+              protocol: TCP
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb-app-services-service
+spec:
+  selector:
+    app: app-services
+  ports:
+    - port: 80
+      targetPort: 8002
+      protocol: TCP
+      appProtocol: HTTP
+  type: LoadBalancer
+
+#---
+#
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: app-services-service
+#spec:
+#  selector:
+#    app: app-services
+#  ports:
+#    - port: 80
+#      nodePort: 30000
+#      targetPort: 8002
+#      protocol: TCP
+#      appProtocol: HTTP
+#  type: NodePort
+#
